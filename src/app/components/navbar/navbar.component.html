@@ -1,0 +1,67 @@
+<!-- the nav bar -->
+<nav class="navbar navbar-inverse bg-dark" style="max-height:120px;">
+  <!-- div that contains the title, search box, and message on the right -->
+  <div class="container-fluid">
+    <!-- title of the site -->
+    <div class="col-3 p-0">
+      <a class="text-white text-title-nav font-weight-bold" routerLink="deals">Deal Site</a>
+    </div>
+    <!-- search box -->
+    <div class="col-md-6 col-9">
+
+      <div class="d-flex flex-row w-100">
+        <input type="text" class="rounded-left w-100" placeholder="Search" [(ngModel)]="searchStr" (input)="searchInput()">
+        <button type="submit" class=" btn bg-warning rounded-0">
+          <i class="fa fa-search text-white"></i>
+        </button>
+      </div>
+
+    </div>
+    <!-- message on the right of the nav -->
+    <div class="col-3 text-white text-center font-weight-bold d-none d-md-block"> <button class="btn btn-link nav-message text-white" routerLink="deals" style="cursor: pointer;">Shop Deals of the Day</button></div>
+
+  </div>
+  <!-- div below that contains the buttons signin/up and cart -->
+  <div class="container-fluid pt-2">
+
+    <ul class="w-100 d-flex flex-row justify-content-center">
+      <li class="dropdown hideBulletLi" *ngIf="isAuthenticated">
+        <button class="btn btn-link text-white font-weight-bold  nav-btn btn-text dropdown-toggle" data-toggle="dropdown">
+          <span class="small">hello, {{firstName}}</span>
+          <br> Account & Lists
+        </button>
+        <div class="dropdown-menu p-0">
+          <button class="w-100 text-center btn btn-link text-dark hand-pointer" routerLink="orderhistory">
+            <i class="fa fa-cubes"></i> Order history
+          </button>
+          
+          <button class="w-100 text-center btn btn-link text-dark hand-pointer" (click)="signout()">
+            <i class="fa fa-sign-out"></i> Sign out
+          </button>
+        </div>
+      </li>
+      <li class="hideBulletLi">
+        <button routerLink="login" *ngIf="!isAuthenticated" class="btn btn-link text-white font-weight-bold py-3 nav-btn btn-text text-center">
+          sign-in
+        </button>
+      </li>
+      <li class="hideBulletLi">
+        <button routerLink="signup" *ngIf="!isAuthenticated" class="btn btn-link text-white font-weight-bold py-3 nav-btn btn-text">
+          sign-up
+        </button>
+      </li>
+
+      <li class="hideBulletLi">
+        <button class="btn btn-link text-white font-weight-bold py-0 nav-btn btn-text" (click)="openCartView()">
+          <span class="fa-stack fa-2x" data-count=1 id="cartNum">
+            <i class="fa fa-stack-2x fa-inverse"></i>
+            <i class="fa fa-shopping-cart fa-stack-1x text-white"></i>
+          </span>
+          cart
+        </button>
+      </li>
+
+    </ul>
+
+  </div>
+</nav>

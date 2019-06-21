@@ -1,0 +1,40 @@
+<div class="page-wrapper d-flex justify-content-center p-3">
+  <div *ngIf="hideVerificationCode == false" class="card align-self-center h-50 border-white-shadow" id="div-box-verificationcode">
+    <div class="card-header bg-warning">
+      <div class="container-fluid w-100 h-100 text-center">
+        <span class="h5">Verification Code</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <form action="" style="width:90%;margin-left:5%; margin-right:5%;" #confirmForm="ngForm" (ngSubmit)="onSubmit(confirmForm)">
+        <div class="form-group">
+          <p class="text-center mb-0 h6">Please enter the verification code you received on your email </p>
+          <p class="text-center text-danger h6 mb-3">it is either in your inbox or junk mail</p>
+          <input class="form-control w-100" type="text" placeholder="Confirmation code" name="code" #code="ngModel" [(ngModel)]="confirmCode.code"
+            required pattern="^\d{6}(?:[-\s])?$" [ngClass]="{'border-danger':(code.errors && code.touched) || (confirmForm.submitted && code.errors)}">
+          <div class="text-danger" *ngIf="(code.errors?.required && code.touched) || (code.errors?.required && confirmForm.submitted)">Confirmation code is required
+          </div>
+          <div class="text-danger" *ngIf="code.errors?.pattern && code.touched">Invalid verification code</div>
+        </div>
+        <span class="text-danger" *ngFor="let ar of errorMsgArr">{{ar}}</span>
+        <div>
+          <button class="btn btn-block mt-4 bg-warning font-weight-bold">
+            Submit
+            <i class="fa fa-arrow-right text-dark"></i>
+            <i *ngIf="isLoading == true" class="fa fa-refresh fa-spin fa-1x fa-fw"></i>
+          </button>
+        </div>
+      </form>
+      <div class="container-fluid d-flex justify-content-center">
+        <button class="btn btn-link mt-3" (click)="resendCode()" style="cursor: pointer;">Resend verification code</button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="hideVerificationCode == true && hideCongrat == false;" class="container card align-self-center h-25 w-25" id="div-congratulation-box">
+    <div class="d-flex flex-row justify-content-center pt-3">
+      <i class="fa fa-check-circle" style="color:green; font-size: 55px;"></i>
+      <span class="h4 ml-3 mt-3">Congratulation!</span>
+    </div>
+    <div class="my-4 text-center">Account has been succesfully created</div>
+  </div>
+</div>

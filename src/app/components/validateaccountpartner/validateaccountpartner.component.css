@@ -1,0 +1,22 @@
+.page-wrapper{
+  min-height: 100vh;
+  position: relative;
+  background:rgb(245,245,245);
+}
+#div-box-verificationcode{
+  width: 35%;
+  min-width: 300px;
+}
+.div-blue-box-verificationCode{
+  width: 100%;
+  background:rgb(75,145,188);
+  padding-top:10px;  
+}
+#div-congratulation-box{
+  width: 325px;
+  min-width: 305px;
+}
+#gray-box-container-id{
+  width: 100%;
+  background:rgb(246,246,246);
+}

@@ -1,0 +1,29 @@
+<div class="container-fluid main-page p-2">
+  <div class="container-fluid pt-4 pb-5">
+    <p class="h3 text-dark">Order history</p>
+    <hr>
+  </div>
+  <!-- this is my spinner. when i am loading things this shows -->
+  <div *ngIf="isLoading" class="container-fluid text-center pt-5">
+    <i class="fa fa-spinner fa-spin" style="font-size:120px;"></i>
+  </div>
+  <button class="container card mt-2 d-flex flex-row p-0" *ngFor="let arr of arrOrderHistoryData" style="max-height: 150px; max-width: 600px;">
+    <div class="col-3 card-body p-0">
+      <img [src]="arr.link" alt="product" style="width:100%; height: 100%; object-fit: cover; max-height: 145px;">
+    </div>
+    <!-- div that contains text item description -->
+    <div class="col-9 bg-white h-100 align-self-center">
+      <span class="text-dark font-weight-bold">
+        Purchased: {{arr.purchase_date}}
+      </span>
+      <br>
+      <span class="text-title text-secondary">{{arr.titleItem}}</span>
+      <br>
+      <span class="text-price text-success">Price: {{arr.price| currency:'USD':'symbol':'2.2'}}</span>
+      <br>
+      <span class="text-dark">
+        QTY: {{arr.quantity}}
+      </span>
+    </div>
+  </button>
+</div>

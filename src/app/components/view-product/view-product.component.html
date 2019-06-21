@@ -1,0 +1,62 @@
+<div class="container-fluid main-page d-flex flex-md-row flex-column justify-content-around p-5">
+  <div class="container align-self-center mr-5 mb-3" style="max-width: 500px; max-height: 500px;">
+    <img [src]="data.link" alt="product" style="width:100%; height: 100%; object-fit: cover;">
+  </div>
+  <div class="container align-self-center" style="max-width: 700px;">
+    <div class="container-fluid text-center">
+      <span class="h3 text-secondary">{{data.titleItem}}</span>
+      <br>
+      <br>
+      <span class="text-success h5">Price: {{data.price| currency:'USD':'symbol':'2.2'}}</span>
+      <br>
+      <span class="text-danger" *ngIf="data.price != data.oldPrice">Was:
+        <span style="text-decoration: line-through">{{data.oldPrice| currency:'USD':'symbol':'2.2'}}
+        </span>
+      </span>
+      <br>
+      <span class="text-dark">
+        Condition: {{data.condition}}
+      </span>
+      <br>
+      <span *ngIf="data.itemShippingOption == 'US'">
+        Item ships to: {{data.itemShippingOption}} only
+      </span>
+      <span *ngIf="data.itemShippingOption != 'US'" class="text-dark">
+        Item ships: {{data.itemShippingOption}}
+      </span>
+      <br>
+      <span class="text-dark">
+        Color: {{data.color}}
+      </span>
+      <br>
+      <span class="text-dark">
+        Category: {{data.itemCategory}}
+      </span>
+      <br>
+      <span class="text-dark">
+        Return Policy: {{data.returnPolicy}}
+      </span>
+      <br>
+      <br>
+      <span class="text-dark card">
+        Description: {{data.description}}
+      </span>
+
+    </div>
+    <div class="container-fluid d-flex flex-column mt-5">
+
+
+      <select class="w-100 align-self-center form-control" name="quant" id="quant" [(ngModel)]="quanty" (ngModelChange)="quantityComboChanged($event)">
+        <option value="choose">Quantity</option>
+        <option *ngFor="let quantity of quantityArrObj" [value]="quantity.value">{{quantity.text}}</option>
+      </select>
+      <span class="text-danger text-center" *ngIf="err">Please select a quantity</span>
+
+
+    </div>
+    <div class="container-fluid d-flex flex-sm-row flex-column justify-content-center mt-5">
+      <button class="btn btn-dark mr-3 w-100 mb-3 mb-sm-0" (click)="addCart()">
+        <i class="fa fa-shopping-cart text-warning"> </i> add to cart</button>      
+    </div>
+  </div>
+</div>

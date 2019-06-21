@@ -1,0 +1,74 @@
+.hideBulletLi{
+  list-style-type: none;
+}
+.hand-pointer{
+  cursor: pointer;
+}
+.fa-stack[data-count]:after{
+  position:absolute;
+  right:0%;
+  top:0%;
+  content: attr(data-count);
+  font-size:70%;
+  padding:.1em;  
+  line-height:.8em;  
+  color:#fbd727  ;
+  text-align:center;
+  min-width:1.2em;
+  font-weight:bold;
+  border:2px solid #fbd727   ;
+  border-radius:1009px;
+
+
+}
+.nav-btn{
+  text-decoration:none;
+  cursor: pointer;
+}
+
+.text-title-nav{
+  font-size: 25px;
+  font-weight: bold;
+  
+  }
+  
+  .nav-message{
+    font-size: 18px;
+  font-weight: bold;
+  
+  }
+
+@media (max-width: 1108px){
+  .text-title-nav{
+    font-size: 20px;
+    font-weight: bold;
+    
+    }
+    
+    .nav-message{
+      font-size: 17px;
+    font-weight: bold;
+    
+    }
+}
+@media (max-width: 900px){
+  .text-title-nav{
+    font-size: 20px;
+    font-weight: bold;
+    
+    }
+    
+    .nav-message{
+      font-size: 14px;
+    font-weight: bold;
+    
+    }
+}
+@media (max-width: 460px){
+  .btn-text{
+    font-size: 12px;
+  }
+  .text-title-nav{
+    font-size: 15px;
+  }
+}

@@ -1,0 +1,56 @@
+<div class="container-fluid mainpage d-flex p-3">
+  <!-- spinner when loading -->
+  <div *ngIf="isLoading" class="container-fluid align-self-center text-center">
+    <i class="fa fa-spinner fa-spin" style="font-size:120px;"></i>
+  </div>
+
+  <!-- div containing the login form -->
+  <div *ngIf="!isLoading" class="container align-self-center card p-0 my-3" style="min-width:230px; max-width: 410px;">
+    <div class="card-header bg-warning text-center font-weight-bold">
+      Sign-in
+    </div>
+    <!-- the text fiels and labels are contain here and i did some form validation client side to ensure data validity before sending request to my backend -->
+    <div class="card-body">
+      <form #loginForm="ngForm" (ngSubmit)="beenSubmit(loginForm)" action="" style="width:90%;margin-left:5%; margin-right:5%;">
+        <div class="form-group">
+          <label for="">
+            <i class="fa fa-envelope"></i> Email</label>
+          <input type="text" name="username" class="form-control" style="height:28px;" [(ngModel)]="login.username" #username="ngModel"
+            pattern="[^@\s]+@[^@\s]+\.[^@\s]+" required [ngClass]="{'is-invalid': (username.errors && loginForm.submitted)}">
+          <span *ngIf="(username.errors?.required && loginForm.submitted)" class="text-danger">
+            Email is required
+          </span>
+          <span class="text-danger" *ngIf="(username.errors?.pattern && loginForm.submitted &&!username.errors?.required)">
+            Invalid email
+          </span>
+        </div>
+        <div class="form-group">
+          <label for="">
+            <i class="fa fa-eye"></i> Password</label>
+          <input type="password" name="password" class="form-control" style="height:28px;" [(ngModel)]="login.password" #password="ngModel"
+            minlength="6" required [ngClass]="{'is-invalid': (password.errors && loginForm.submitted)}">
+          <span *ngIf="(password.errors?.required && loginForm.submitted)" class="text-danger">
+            password is required
+          </span>
+          <span class="text-danger" *ngIf="(password.errors?.minlength && loginForm.submitted &&!password.errors?.required)">
+            Invalid password
+          </span>
+        </div>
+        <!-- display errors from backend -->
+        <div class="row">
+          <div class="col-12 text-danger" *ngFor="let errorMsg of errorMsg">{{errorMsg}}</div>
+        </div>
+        <div class="mt-3">
+          <button class="btn btn-block text-dark bg-warning font-weight-bold">
+            <i class="fa fa-lock text-dark"></i> Login
+          </button>
+        </div>
+      </form>
+      <hr>
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-block" routerLink="/signup">sign-up</button>
+      </div>      
+    </div>
+  </div>
+
+</div>

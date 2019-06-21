@@ -1,0 +1,58 @@
+.main-page{
+  min-height: 100vh;
+  position: relative;
+  margin:0;
+  padding: 0;
+  background:rgba(242,251,255,1);
+}
+.bg-lgray{
+  background:rgba(242,251,255,1);
+}
+
+
+.item:nth-child(n+0) .color-div {
+  background-color: lightgrey;
+}
+.item:nth-child(2n+0) .color-div {
+  background-color: orange;
+}
+.item:nth-child(3n+0) .color-div {
+  background-color: lightblue;
+}
+
+.btn-card{
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.text-title{
+  font-size: 25px;
+  font-weight: bold;
+}
+.text-price{
+  font-size: 17px;
+  font-weight: bold;
+
+}
+
+.text-other{
+  font-size: 14px;
+}
+
+
+
+@media (max-width: 1108px){
+  .text-title{
+    font-size: 17px;
+    font-weight: bold;
+  }
+  .text-price{
+    font-size: 15px;
+    font-weight: bold;
+  
+  }  
+  .text-other{
+    font-size: 12px;
+  }
+
+}

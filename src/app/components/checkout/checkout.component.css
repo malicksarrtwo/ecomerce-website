@@ -1,0 +1,75 @@
+.main-page{
+  min-height: 100vh;
+  position: relative;
+  margin:0;
+  padding: 0;
+  background:rgba(242,251,255,1);
+}
+/* changes input from box to a line */
+.input-format{
+  outline: 0;
+  border-width: 0 0 2px;
+  border-color: lightgray;
+  width: 98%;
+  margin-left:13px;
+  margin-bottom: 20px;
+}
+
+/* when input is focus color is green */
+.input-format:focus{
+  border-color: green;
+}
+
+/* for form validation. when there is an error underline things in red */
+.input-format-error{
+  outline: 0;
+  border-width: 0 0 2px;
+  border-color: red;
+  width: 98%;
+  margin-bottom: 20px;
+}
+
+.input-format-small{
+  outline: 0;
+  border-width: 0 0 2px;
+  border-color: lightgray;
+  width: 95%;
+  margin-left:5%;
+  margin-bottom: 20px;
+}
+.input-format-small:focus{
+  border-color: green;
+}
+
+.input-format-small-error{
+  outline: 0;
+  border-width: 0 0 2px;
+  border-color: red;
+  width: 95%;
+  margin-left:5%;
+  margin-bottom: 20px;
+
+}
+
+.label-format{
+  color: black;
+  font-size: 15px;
+  margin-top: -6.2px;
+}
+
+.label-format-error{
+  color: red;
+  font-size: 15px;
+  margin-top: -6.2px;
+}
+
+.error-radio-button{
+  border:1px solid red;
+}
+
+.input-format:focus + .label-format{
+  color:green;
+}
+.input-format-small:focus + .label-format{
+  color:green;
+}

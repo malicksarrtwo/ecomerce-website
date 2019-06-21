@@ -1,0 +1,159 @@
+<div class="container-fluid .main-page p-0 d-flex">
+  <div *ngIf="showCongrats" class="container border border-success text-success h-100 text-center mt-5 align-self-center">
+    Congratulation!
+    <br> Order has been successfully placed.
+  </div>
+  <div *ngIf="!showCongrats" class="container-fluid">
+    <div class="container-fluid d-flex flex-lg-row flex-column-reverse justify-content-center">
+      <!-- Container on the left containing: Total and items bought -->
+      <div class="container w-100 card p-0 h-75 align-self-center mx-4 my-5" style="max-width: 577px;">
+        <div class="card-header text-center" style="max-height: 100px;">Total: {{grandTotal| currency:'USD':'symbol':'2.2'}}</div>
+        <div class="card-body w-100 p-0" style="overflow-y: auto; overflow-x:auto;">
+          <div class="card w-100 d-flex flex-row p-0 h-100" *ngFor="let myArr of myCartArr" style="max-height: 120px; min-width: 350px;">
+            <div class="col-lg-4 col-3 card-body h-100 p-0" style="min-width: 150px;">
+              <img [src]="myArr.link" alt="product" style="width:100%; height: 100%; object-fit: cover; max-height: 110px; max-width: 140px;">
+            </div>
+            <div class="col-lg-8 col-6 d-flex  h-100  p-0 ">
+
+              <div class="container-fluid align-self-center col-12">
+                <div class="col-12 text-center">
+                  {{myArr.titleItem}}
+                </div>
+                <div class="col-12 d-flex justify-content-center">
+                  QTY: {{myArr.quantity}}
+                </div>
+                <div class="col-12 text-center">
+                  {{myArr.finalPrice| currency:'USD':'symbol':'2.2'}}
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- The container that contains the checkout form on the right -->
+      <div class="container align-self-center p-0 mx-4 my-5" style="max-width: 587px;">
+        <form #purchaseForm="ngForm" (ngSubmit)="onSubmit(purchaseForm)" *ngIf="!toggleAddLocation">
+          <div class="card border-white-shadow">
+            <div class="card-header bg-warning text-white text-center h5">Checkout</div>
+            <div class="card-body">
+              <div class="row pt-2 pb-4 d-flex justify-content-center">
+                <p class="h4">Billing Information:</p>
+              </div>
+              <!-- First name divs, label, textfield, and form validation -->
+              <div class="row">
+                <div class="col-xl-12">
+                  <div class="form-group">
+                    <span class="d-flex flex-column-reverse">
+                      <input type="text" class="input-format" placeholder="Enter First and last name" name="name" [(ngModel)]="checkout.name" #name="ngModel"
+                        required [ngClass]="{'input-format-error': (name.errors && name.touched) ||(name.errors && purchaseForm.submitted), 'mt-3': name.errors?.required, 'mt-0': !name.errors?.required} "
+                        minlength="2" maxlength="50">
+                      <label class="label-format" *ngIf="!name.errors?.required" [ngClass]="name.errors && name.touched ? 'label-format-error' : 'label-format'">Name
+                      </label>
+                    </span>
+
+                    <div *ngIf="(name.errors?.required && name.touched) || (name.errors?.required && purchaseForm.submitted)" class="text-danger">Name is required
+                    </div>
+                    <div *ngIf="name.errors?.minlength && name.touched" class="text-danger">must be at least 2 characters</div>
+                  </div>
+                </div>
+              </div>
+              <!-- email divs, label, textfield, and form validation -->
+              <div class="row">
+                <div class="col-xl-12">
+                  <div class="form-group">
+                    <span class="d-flex flex-column-reverse">
+                      <input type="text" class="input-format" placeholder="Email" name="email" [(ngModel)]="checkout.email" #email="ngModel" required
+                        [ngClass]="{'input-format-error': ((email.errors && email.touched)||(email.errors && purchaseForm.submitted)), 'mt-3': email.errors?.required, 'mt-0': !email.errors?.required} "
+                        maxlength="50" pattern="[^@\s]+@[^@\s]+\.[^@\s]+">
+                      <label for="" *ngIf="!email.errors?.required" [ngClass]="((email.errors && email.touched)||(email.errors && purchaseForm.submitted)) ? 'label-format-error' : 'label-format'">Email</label>
+                    </span>
+                    <div *ngIf="((email.errors?.required && email.touched)||(email.errors?.required && purchaseForm.submitted))" class="text-danger">Email is required</div>
+                    <div class="text-danger" *ngIf="email.errors?.pattern && email.touched">Invalid email</div>
+                  </div>
+                </div>
+              </div>
+              <!-- street: divs, label, textfield, and form validation -->
+              <div class="row">
+                <div class="col-xl-12">
+                  <div class="form-group">
+                    <span class="d-flex flex-column-reverse">
+                      <input type="text" class="input-format" placeholder="Street" name="street" [(ngModel)]="checkout.street" #street="ngModel"
+                        required [ngClass]="{'input-format-error': ((street.errors && street.touched)||(street.errors && purchaseForm.submitted)), 'mt-3': street.errors?.required, 'mt-0': !street.errors?.required} "
+                        minlength="2" maxlength="50">
+                      <label for="" *ngIf="!street.errors?.required" [ngClass]="((street.errors && street.touched)||(street.errors && purchaseForm.submitted)) ? 'label-format-error' : 'label-format'">Street</label>
+                    </span>
+                    <div *ngIf="((street.errors?.required && street.touched)||(street.errors?.required && purchaseForm.submitted))" class="text-danger">Street is required</div>
+                    <div *ngIf="street.errors?.minlength && street.touched" class="text-danger">must be at least 2 characters
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- This div contains city, state, and zip fiels. -->
+              <div class="row">
+                <!-- city -->
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <span class="d-flex flex-column-reverse">
+                      <input type="text" class="input-format-small" placeholder="City" name="city" #city="ngModel" [(ngModel)]="checkout.city"
+                        required [ngClass]="{'input-format-small-error': ((city.errors && city.touched)||(city.errors && purchaseForm.submitted)), 'mt-4': city.errors?.required, 'mt-0': !city.errors?.required} "
+                        minlength="2" maxlength="50">
+                      <label for="" class="label-format" *ngIf="!city.errors?.required" [ngClass]="((city.errors && city.touched)||(city.errors && purchaseForm.submitted)) ? 'label-format-error' : 'label-format'">City</label>
+                    </span>
+                    <div *ngIf="((city.errors?.required && city.touched)||(city.errors?.required && purchaseForm.submitted))" class="text-danger">City is required</div>
+                    <div *ngIf="city.errors?.minlength && city.touched" class="text-danger">must be at least 2 characters</div>
+                  </div>
+                </div>
+                <!-- state select -->
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <span class="d-flex flex-column-reverse pt-1">
+                      <select name="states" id="states" appRequiredValidatorSelect="select" class="input-format-small" [(ngModel)]="checkout.states"
+                        #states="ngModel" [ngClass]="{'input-format-small-error': ((states.touched && states.errors?.defaultSelected)||(states.errors?.defaultSelected && purchaseForm.submitted)), 'mt-4': states.errors?.defaultSelected, 'mt-0': !states.errors?.defaultSelected}">
+                        <option value="select">Select State</option>
+                        <option *ngFor="let state of state" [value]="state.value">
+                          {{state.text}}
+                        </option>
+                      </select>
+                      <label for="" class="label-format" *ngIf="!states.errors?.defaultSelected" [ngClass]="((states.errors && states.touched)||(states.errors && purchaseForm.submitted)) ? 'label-format-error' : 'label-format'">State</label>
+                    </span>
+                    <div *ngIf="((states.errors?.defaultSelected && states.touched)||(states.errors?.defaultSelected && purchaseForm.submitted))"
+                      class="text-danger">*Please select a state
+                    </div>
+                  </div>
+                </div>
+                <!-- zip textfield -->
+                <div class="col-sm-4">
+                  <span>
+                    <div class="form-group d-flex flex-column-reverse">
+                      <input type="text" class="input-format-small" name="zip" placeholder="Zip" #zip="ngModel" [(ngModel)]="checkout.zip" required
+                        [ngClass]="{'input-format-small-error': ((zip.errors && zip.touched)||(zip.errors && purchaseForm.submitted)), 'mt-4': zip.errors?.required, 'mt-0': !zip.errors?.required} "
+                        required pattern="^\d{5}(?:[-\s])?$">
+                      <label for="" class="label-format" *ngIf="!zip.errors?.required" [ngClass]="((zip.errors && zip.touched)||(zip.errors && purchaseForm.submitted)) ? 'label-format-error' : 'label-format'">Zip</label>
+                    </div>
+                  </span>
+                  <div *ngIf="((zip.errors?.required && zip.touched)||(zip.errors?.required && purchaseForm.submitted))" class="text-danger">Zip is required</div>
+                  <div *ngIf="zip.errors?.pattern && zip.touched" class="text-danger">Zip is invalid</div>
+                </div>
+              </div>
+              <div class="row d-flex justify-content-between mt-3">
+                <div class="col-xl-12">
+                  <p *ngFor="let er of errorMsgArr" class="text-center text-danger border border-danger">
+                    {{er}}
+                  </p>
+                </div>
+              </div>
+
+            </div>
+            <div class="card-footer bg-white d-flex justify-content-end">
+              <button class="btn btn-dark">
+                Purchase
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

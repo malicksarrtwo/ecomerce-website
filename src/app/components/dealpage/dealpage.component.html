@@ -1,0 +1,101 @@
+<div class="container-fluid main-page">
+  <!-- this is my spinner. when i am loading things this shows -->
+  <div *ngIf="isLoading" class="container-fluid text-center pt-5">
+    <i class="fa fa-spinner fa-spin" style="font-size:120px;"></i>
+  </div>
+  <div class="container text-danger text-center" *ngFor="let errMsgArr of errMsgArr">{{errMsgArr}}</div>
+  <div class="container-fluid d-flex justify-content-center">
+    <!-- side nav with checkboxes for filtering data-->
+    <div class="col-4 col-lg-2 col-md-3  w-25 my-5 h-100 d-none d-sm-block" *ngIf="!isLoading">
+
+      <div class="container-fluid d-flex flex-column">
+        <label for="" class="font-weight-bold"> Condition</label>
+        <span>
+          <input type="checkbox" id="new" (change)="filterCondition()"> New</span>
+        <span>
+          <input type="checkbox" id="used" (change)="filterCondition()"> Used</span>
+      </div>
+
+      <div class="container-fluid d-flex flex-column mt-4">
+        <label for="" class="font-weight-bold"> Item Ships</label>
+        <span>
+          <input type="checkbox" id="usOnly" (change)="filterCondition()"> USA</span>
+        <span>
+          <input type="checkbox" id="worldWide" (change)="filterCondition()"> World Wide</span>
+      </div>
+      <div class="container-fluid d-flex flex-column mt-4">
+        <label for="" class="font-weight-bold"> Category</label>
+        <span>
+          <input type="radio" name="category" id="watch" (change)="filterCondition()"> Watch
+        </span>
+        <span>
+          <input type="radio" name="category" id="furniture" (change)="filterCondition()"> Furniture
+        </span>
+        <span>
+          <input type="radio" name="category" id="car" (change)="filterCondition()"> Car
+        </span>
+        <span>
+          <input type="radio" name="category" id="clothing" (change)="filterCondition()"> Clothing
+        </span>
+      </div>
+      <div class="container-fluid mt-3">
+        <button class="btn btn-dark text-warning" (click)="clearFilters()">Clear</button>
+      </div>
+
+    </div>
+    <!-- this div contains the deals and the combobox/select for sorting by price -->
+    <div class="col-8 card p-0 my-5" *ngIf="!isLoading" style="min-width: 300px; max-width: 800px;">
+      <!-- this card header only contains the select that will sort prices -->
+      <div class="card-header w-100">
+        <div class="container-fluid d-flex justify-content-end">
+          <label for="" class="mr-3 mt-2">Sort: </label>
+          <select name="" id="" [(ngModel)]="comboPriceModel" (ngModelChange)="sortComboBox($event)">
+            <option value="lowToHigh"> lowest to highest Price</option>
+            <option value="highToLow"> Highest to lowest Price</option>
+          </select>
+        </div>
+      </div>
+      <!-- this card body contains img of the deals and text description -->
+      <div class="w-100 card-body p-0" style="overflow-y: auto; overflow-x:auto;">
+        <div class="container-fluid text-center mt-3" *ngIf="lengthArrFilter == 0">Item does not exist</div>
+        <button class="w-100 btn btn-link card d-flex flex-row p-0 btn-card border" *ngFor="let myArr of filteredArr" (click)="openPopupDialog(myArr)"
+          style="cursor: pointer; min-width: 400px;">
+          <!-- div contains img  -->
+          <div class="col-4 card-body p-0 align-self-center" style="min-width: 150px;">
+            <img [src]="myArr.link" alt="product" style="width:100%; height: 100%; object-fit: cover; max-width: 190px;">
+          </div>
+          <!-- div that contains text item description -->
+          <div class="col-8 bg-white h-100 align-self-center">
+            <span class="text-title text-secondary">{{myArr.titleItem}}</span>
+            <br>
+            <span class="text-price text-success">Price: {{myArr.price| currency:'USD':'symbol':'2.2'}}</span>
+            <br>
+            <!-- using the logic below to displayed crossed old price only in case of a promotion -->
+            <span class="text-danger text-other" *ngIf="myArr.price != myArr.oldPrice">Was:
+              <span style="text-decoration: line-through">{{myArr.oldPrice| currency:'USD':'symbol':'2.2'}}
+              </span>
+            </span>
+            <br>
+            <!-- here all i am doing change the text display depending on if the item -->
+            <!-- ships in the us only or world wide -->
+            <span *ngIf="myArr.itemShippingOption == 'US'" class="text-other">
+              Item ships to: {{myArr.itemShippingOption}}
+            </span>
+            <span *ngIf="myArr.itemShippingOption != 'US'" class="text-other text-dark">
+              Item ships: {{myArr.itemShippingOption}}
+            </span>
+            <br>
+            <span class="text-dark text-other">
+              Condition: {{myArr.condition}}
+            </span>
+            <br>
+            <span class="text-dark text-other">
+              Gender: {{myArr.Gender}}
+            </span>
+
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

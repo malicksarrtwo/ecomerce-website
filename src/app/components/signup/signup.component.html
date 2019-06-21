@@ -1,0 +1,122 @@
+<div class="container-fluid mainpage d-flex">
+  <!-- spinner when loading -->
+  <div *ngIf="isLoading" class="container-fluid align-self-center text-center">
+    <i class="fa fa-spinner fa-spin" style="font-size:120px;"></i>
+  </div> 
+ 
+
+  <!-- div containing the signup form this is visible when form is not loading and when the congratulation message above is hidden -->
+  <div *ngIf="!isLoading" class="container w-75 h-75 card p-0 my-3 align-self-center" id="container-form">
+    <div class="card-header w-100 bg-warning text-center font-weight-bold">
+      Create Account
+    </div>
+    <!-- the text fiels, selects, and labels are contained here and i did some form validation client side to ensure data validity before sending request to my backend -->
+    <div class="card-body w-100">
+      <form #signUpForm="ngForm" (ngSubmit)="onSubmit(signUpForm)" style="width:100%; ">
+        <div class="row d-flex justify-content-around flex-sm-row flex-column">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <span class="d-flex flex-column-reverse">
+                <input type="text" class="input-format-small" placeholder="First name" name="firstName" #firstName="ngModel" [(ngModel)]="userSignup.firstName"
+                  required minlength="2" [ngClass]="{'input-format-small-error': (firstName.errors && firstName.touched)||(signUpForm.submitted &&firstName.errors), 'mt-4': firstName.errors?.required, 'mt-0': !firstName.errors?.required}">
+                <label for="" *ngIf="!firstName.errors?.required" class="label-format" [ngClass]="firstName.errors && firstName.touched ? 'label-format-error' : 'label-format'">First name
+                </label>
+              </span>
+              <div *ngIf="(firstName.errors?.required && firstName.touched)||(signUpForm.submitted && firstName.errors?.required)" class="text-danger">First name is required</div>
+              <div *ngIf="(firstName.errors?.minlength && firstName.touched)" class="text-danger">must be at least 2 characters
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <span class="d-flex flex-column-reverse">
+                <input type="text" class="input-format-small" placeholder="Last name" name="lastName" #lastName="ngModel" [(ngModel)]="userSignup.lastName"
+                  required minlength="2" [ngClass]="{'input-format-small-error': (lastName.errors && lastName.touched)||(signUpForm.submitted &&lastName.errors), 'mt-4': lastName.errors?.required, 'mt-0': !lastName.errors?.required}">
+                <label for="" class="label-format" *ngIf="!lastName.errors?.required" [ngClass]="lastName.errors && lastName.touched ? 'label-format-error' : 'label-format'">Last name
+                </label>
+              </span>
+              <div *ngIf="(lastName.errors?.required && lastName.touched)||(signUpForm.submitted && lastName.errors?.required)" class="text-danger">Last name is required</div>
+              <div *ngIf="lastName.errors?.minlength && lastName.touched" class="text-danger">must be at least 2 characters
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row my-2 mb-3">
+          <span class="col-12 d-flex justify-content-around">
+            <div class="px-2" [ngClass]="{'error-radio-button': (gender.errors && gender.touched)||(gender.errors && signUpForm.submitted)}">
+              <input type="radio" name="gender" value="male" #gender="ngModel" [(ngModel)]="userSignup.gender" required> Male
+            </div>
+            <div class="px-2" [ngClass]="{'error-radio-button': (gender.errors && gender.touched)||(gender.errors && signUpForm.submitted)}">
+              <input type="radio" name="gender" value="female" #gender="ngModel" [(ngModel)]="userSignup.gender" required> Female</div>
+          </span>
+          <span class="col-12 text-danger d-flex justify-content-center" *ngIf="(gender.errors?.required && gender.touched)||(signUpForm.submitted && gender.errors?.required)">Select a gender</span>
+        </div>
+
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="form-group">
+              <span class="d-flex flex-column-reverse">
+                <input type="text" class="input-format" placeholder="Email" name="email" #email="ngModel" [(ngModel)]="userSignup.email"
+                  required pattern="[^@\s]+@[^@\s]+\.[^@\s]+" [ngClass]="{'input-format-error': (email.errors && email.touched)||(signUpForm.submitted && email.errors), 'mt-4': email.errors?.required, 'mt-0': !email.errors?.required}">
+                <label for="" class="label-format" *ngIf="!email.errors?.required" [ngClass]="email.errors && email.touched ? 'label-format-error' : 'label-format'">Email</label>
+              </span>
+              <div class="text-danger" *ngIf="(email.errors?.required && email.touched)||(signUpForm.submitted && email.errors?.required)">
+                Email is required</div>
+              <div class="text-danger" *ngIf="email.errors?.pattern && email.touched">Invalid email</div>
+            </div>
+          </div>
+        </div>
+        <div class="row d-flex justify-content-around">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <span class="d-flex flex-column-reverse">
+                <input type="password" placeholder="Password" class="input-format-small" name="password" (input)="confirmPassword.control.updateValueAndValidity()"
+                  #password="ngModel" [(ngModel)]="userSignup.password" minlength="6" required [ngClass]="{'input-format-small-error': (password.errors && password.touched)||(signUpForm.submitted && password.errors), 'mt-4': password.errors?.required, 'mt-0': !password.errors?.required}">
+                <label for="" *ngIf="!password.errors?.required" [ngClass]="password.errors && password.touched ? 'label-format-error' : 'label-format'"
+                  class="label-format">Password</label>
+              </span>
+              <span *ngIf="(password.errors?.required && password.touched)||(password.errors?.required && signUpForm.submitted)" class="text-danger">
+                password is required
+              </span>
+              <span class="text-danger" *ngIf="(password.errors?.minlength && password.touched)||(password.errors?.minlength && signUpForm.submitted &&!password.errors?.required)">
+                Must be at least 6 characters
+              </span>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <span class="d-flex flex-column-reverse">
+                <input type="password" placeholder="Confirm password" class="input-format-small" name="confirmPassword" #confirmPassword="ngModel"
+                  [(ngModel)]="userSignup.confirmPassword" appConfirmPassword="password" required [ngClass]="{'input-format-small-error': (confirmPassword.errors && confirmPassword.touched)||(signUpForm.submitted && confirmPassword.errors), 'mt-4': confirmPassword.errors?.required, 'mt-0': !confirmPassword.errors?.required}">
+                <label for="" *ngIf="!confirmPassword.errors?.required" [ngClass]="confirmPassword.errors && confirmPassword.touched ? 'label-format-error' : 'label-format'"
+                  class="label-format">Confirm password</label>
+              </span>
+              <span *ngIf="(confirmPassword.errors?.required && confirmPassword.touched)||(confirmPassword.errors?.required && signUpForm.submitted)"
+                class="text-danger">
+                Confirm password is required
+              </span>
+              <span *ngIf="(confirmPassword.errors?.notEqual && confirmPassword.touched && !confirmPassword.errors?.required)||(confirmPassword.errors?.notEqual && signUpForm.submitted && !confirmPassword.errors?.required)"
+                class="text-danger">
+                passwords do not match
+              </span>
+            </div>
+          </div>
+        </div>
+        <!-- display errors from backend -->
+        <div class="row">
+          <div class="col-12 text-danger text-center" *ngFor="let errMsg of errMsgArr">
+            {{errMsgArr}}
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-12">
+            <button class="btn btn-block bg-warning font-weight-bold">
+              <i class="fa fa-pencil text-dark"></i> submit
+            </button>
+          </div>
+        </div>
+      </form>      
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,53 @@
+<div class="container-fluid main-page">
+  <!-- div is visible when the cart is not empty -->
+  <div class="container d-flex flex-lg-row flex-column-reverse p-3" *ngIf="!cartIsEmpty">
+    <!-- div contains 2 divs. 1st div is the card with picture and item description, second div has two buttons(keep shopping and go to checkout) and the total amount to pay -->
+    <div class="container col-lg-8 col-12 p-0">
+      <!-- div contains image of product and the text description -->
+      <div class="card d-flex flex-row p-0 mb-3 h-100 pr-5" *ngFor="let myArr of arrCartInfo" id="card-style">
+        <div class="col-lg-4 col-4 card-body h-100 p-0" style="min-width: 140px; ">          
+          <img [src]="myArr.link" alt="product" style="width:100%; height: 100%; object-fit: cover; max-height: 110px; max-width: 140px;">
+        </div>
+        <div class="col-lg-8 col-8 d-flex  h-100  p-0 ">
+
+          <div class="container-fluid align-self-center col-12">
+            <div class="col-12 h6 text-center">
+              {{myArr.titleItem}}
+            </div>
+            <div class="col-12 d-flex justify-content-center">
+              QTY: {{myArr.quantity}}
+            </div>
+            <div class="col-12 h6 text-center">
+              {{myArr.finalPrice| currency:'USD':'symbol':'2.2'}}
+            </div>
+            <div class="col-12 d-flex justify-content-center">
+              <button class="btn btn-link" (click)="removeData(myArr)">remove</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- div has two buttons checkout and keep shopping and displays the total amount to pay -->
+    <div class="container col-lg-4 col-12 mb-4">
+      <div class="container-fluid p-0 card">
+        <button class="btn btn btn-success" routerLink="/checkout">Go to Checkout</button>
+        <button class="btn btn btn-dark" (click)="rerouteDealPage()">Keep shopping</button>
+      </div>
+      <div class="card-footer bg-white text-center">
+        Total: {{grandTotal| currency:'USD':'symbol':'2.2'}}
+      </div>
+    </div>
+  </div>
+  <!-- div below is visible when cart is empty. displaye a message and has a button shop now which rerouts the user to the deals page. -->
+  <div class="container-fluid align-self-center h2 text-center" *ngIf="cartIsEmpty">
+    Cart is Empty
+    <br>
+    <button class="btn btn-dark text-warning" (click)="rerouteDealPage()">
+      <i class="fa fa-shopping-cart text-warning"></i> Shop now</button>
+  </div>
+
+
+
+
+</div>
