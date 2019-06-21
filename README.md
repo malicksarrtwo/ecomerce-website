@@ -13,5 +13,5 @@ Finally ng serve --open
 
 ## Link 
 I did host this website on AWS S3.
-Note: when using your phone's browser, once the browser is open  click on the settings and select Desktop site. Otherwise the image resizing will be off.
+Note: when using your phone's browser, once the browser is open  click on the settings and select Desktop site. Otherwise the image resizing can be off.
 Link is: http://ecomerce-site.s3-website-us-east-1.amazonaws.com
