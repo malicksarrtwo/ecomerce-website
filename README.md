@@ -1,5 +1,5 @@
 # Hosted this project as a website:
-I did host this website on AWS S3. Link is: http://ecomerce-site.s3-website-us-east-1.amazonaws.com
+I did deploy this project on AWS S3 for quick testing purposes. Link is: http://ecomerce-site.s3-website-us-east-1.amazonaws.com
 
 # Ecomerceapp
 
