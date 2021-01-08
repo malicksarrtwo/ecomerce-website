@@ -1,3 +1,6 @@
+# Hosted this project as a website:
+I did host this website on AWS S3. Link is: http://ecomerce-site.s3-website-us-east-1.amazonaws.com
+
 # Ecomerceapp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.9.
